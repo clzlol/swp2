@@ -79,6 +79,10 @@ async def rework(ctx):
     for key in repeat:
          repeat_output += f"{key} : {repeat[key]}\n"
     await ctx.send(repeat_output)
+    '''
+    틀린_단어.csv에
+    날짜 추가, repeat의 내용추가
+    '''
 
 
 
@@ -89,6 +93,7 @@ async def retest(ctx):
 
 @bot.command(name="주간기록")
 async def recall(ctx):
+    await ctx.send("다음 단어들을 복습했어요")
     #일주일 동안 틀린 단어 출력
     pass
 
