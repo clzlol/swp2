@@ -20,9 +20,6 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-@bot.command(name = "시간")
-async def SendMessage(ctx):
-    await ctx.send(datetime.datetime.now())
 
 async def schedule_daily_message():
     # wait for some time
@@ -49,6 +46,11 @@ async def schedule_daily_message():
 
     await channel.send(f"{words[0]}, {words[1]}, {words[2]}")
 
+    
+@bot.command(name = "시간")
+async def SendMessage(ctx):
+    await ctx.send(datetime.datetime.now())
+
 
 @bot.command(name = "정답")
 async def answer(ctx, one:str, two:str, three:str):
@@ -73,15 +75,22 @@ async def answer(ctx, one:str, two:str, three:str):
 
 @bot.command(name = "복습")
 async def rework(ctx):
-    repeat_output=""
+    repeat_output="다음 단어들을 틀렸어요.\n"
     for key in repeat:
          repeat_output += f"{key} : {repeat[key]}\n"
     await ctx.send(repeat_output)
 
 
-@bot.command(name="재시험") #한 주에 한 번
+
+@bot.command(name="재시험") #틀린 단어 재시험
 async def retest(ctx):
     print("복습하세요!")
+
+
+@bot.command(name="주간기록")
+async def recall(ctx):
+    #일주일 동안 틀린 단어 출력
+    pass
 
 
 @bot.event
