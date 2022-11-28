@@ -1,6 +1,6 @@
 import nextcord
 from nextcord.ext import commands
-import requests, json, random, datetime, asyncio, csv
+import random, datetime, asyncio, csv
 
 global words, kor, value, data, repeat
 words = [] #영단어
@@ -26,7 +26,7 @@ async def schedule_daily_message():
     # send a message
     now = datetime.datetime.now()
     #then = now + datetime.timedelta(days = 1)
-    then = now.replace(hour = 16, minute = 55)
+    then = now.replace(hour = 00, minute = 8)
     wait_time = (then - now).total_seconds()
     await asyncio.sleep(wait_time)
 
@@ -40,23 +40,19 @@ async def schedule_daily_message():
         words.append(data[value[i]][0])
         kor.append(data[value[i]][1])
         kor[i] = kor[i].split(", ")
-    print(kor)
+    #print(kor)
     
     channel = bot.get_channel(1042374278424829955)
 
     await channel.send(f"{words[0]}, {words[1]}, {words[2]}")
 
-    
-@bot.command(name = "시간")
-async def SendMessage(ctx):
-    await ctx.send(datetime.datetime.now())
-
 
 @bot.command(name = "정답")
 async def answer(ctx, one:str, two:str, three:str):
     answer = [one, two, three]
-    print(answer)
+    #print(answer)
     wrong_count=0
+
     for i in range(3):
         if len(kor[i]) != 1:
             if answer[i] not in kor[i]:
@@ -79,23 +75,36 @@ async def rework(ctx):
     for key in repeat:
          repeat_output += f"{key} : {repeat[key]}\n"
     await ctx.send(repeat_output)
-    '''
-    틀린_단어.csv에
-    날짜 추가, repeat의 내용추가
-    '''
 
-
-
-@bot.command(name="재시험") #틀린 단어 재시험
-async def retest(ctx):
-    print("복습하세요!")
+    f = open('틀린_단어.csv', 'a', newline='')
+    wr = csv.writer(f)
+    wr.writerow([f'{datetime.datetime.today().month}/{datetime.datetime.today().day}', '---', '---'])
+    for key in repeat:
+        wr.writerow(['', key, repeat[key]])
+    f.close()
 
 
 @bot.command(name="주간기록")
 async def recall(ctx):
-    await ctx.send("다음 단어들을 복습했어요")
-    #일주일 동안 틀린 단어 출력
-    pass
+    repeat_data = list()
+    f = open("틀린_단어.csv", 'r')
+    read = csv.reader(f)
+    for row in read:
+        repeat_data.append(row)
+    f.close
+    report_output=""
+    k=7
+    #print(repeat_data)
+    for i in range(len(repeat_data)-1, 0, -1):
+        if repeat_data[i][0] != '':
+            report_output = "\n" + repeat_data[i][0] + "\n" + report_output
+            k-=1
+            continue
+        report_output = f"{repeat_data[i][1]} : {repeat_data[i][2]}\n" + report_output
+        if k==0:
+            break
+    report_output = '다음 단어들을 복습했어요\n' + report_output
+    await ctx.send(report_output)
 
 
 @bot.event
