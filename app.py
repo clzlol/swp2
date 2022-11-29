@@ -27,7 +27,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 #매일 같은 시간에 단어 시험을 진행한다
 async def schedule_daily_message():
     now = datetime.datetime.now()
-    then = now.replace(hour = 9, minute = 57)
+    then = now.replace(hour = 10, minute = 30)
     wait_time = (then - now).total_seconds()
     await asyncio.sleep(wait_time)
 
