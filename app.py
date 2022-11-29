@@ -22,10 +22,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 
 async def schedule_daily_message():
-    # wait for some time
-    # send a message
     now = datetime.datetime.now()
-    #then = now + datetime.timedelta(days = 1)
     then = now.replace(hour = 00, minute = 8)
     wait_time = (then - now).total_seconds()
     await asyncio.sleep(wait_time)
@@ -44,7 +41,7 @@ async def schedule_daily_message():
     
     channel = bot.get_channel(1042374278424829955)
 
-    await channel.send(f"{words[0]}, {words[1]}, {words[2]}")
+    await channel.send(f"오늘의 단어입니다.\n{words[0]}, {words[1]}, {words[2]}")
 
 
 @bot.command(name = "정답")
@@ -78,13 +75,13 @@ async def rework(ctx):
 
     f = open('틀린_단어.csv', 'a', newline='')
     wr = csv.writer(f)
-    wr.writerow([f'{datetime.datetime.today().month}/{datetime.datetime.today().day}', '---', '---'])
+    wr.writerow([f'{datetime.datetime.today().month}/{datetime.datetime.today().day}', '---------', '---------'])
     for key in repeat:
         wr.writerow(['', key, repeat[key]])
     f.close()
 
 
-@bot.command(name="주간기록")
+@bot.command(name="주간기록") #최근 7일간 복습한 단어 출력
 async def recall(ctx):
     repeat_data = list()
     f = open("틀린_단어.csv", 'r')
@@ -96,13 +93,13 @@ async def recall(ctx):
     k=7
     #print(repeat_data)
     for i in range(len(repeat_data)-1, 0, -1):
+        if k==0:
+            break
         if repeat_data[i][0] != '':
             report_output = "\n" + repeat_data[i][0] + "\n" + report_output
             k-=1
             continue
         report_output = f"{repeat_data[i][1]} : {repeat_data[i][2]}\n" + report_output
-        if k==0:
-            break
     report_output = '다음 단어들을 복습했어요\n' + report_output
     await ctx.send(report_output)
 
