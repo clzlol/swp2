@@ -20,32 +20,35 @@ f.close
 intents = nextcord.Intents.default()
 intents.message_content = True
 
-#명령어 접두사 지정, 게이트웨이설정(?)
+#명령어 접두사 지정, 게이트웨이설정
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 
 #매일 같은 시간에 단어 시험을 진행한다
 async def schedule_daily_message():
-    now = datetime.datetime.now()
-    then = now.replace(hour = 10, minute = 30)
-    wait_time = (then - now).total_seconds()
-    await asyncio.sleep(wait_time)
+    while True:
+        now = datetime.datetime.now()
+        then = now + datetime.timedelta(days=1)
+        then = then.replace(hour = 0, minute=0)
+        wait_time = (then - now).total_seconds()
+        print(wait_time)
+        await asyncio.sleep(wait_time)
 
-    value.clear()
-    for _ in range(3):
-        value.append(random.randint(1,3000))
+        value.clear()
+        for _ in range(3):
+            value.append(random.randint(1,3000))
 
-    words.clear()
-    kor.clear()
-    for i in range(3):
-        words.append(data[value[i]][0])
-        kor.append(data[value[i]][1])
-        kor[i] = kor[i].split(", ")
-    #print(kor)
-    
-    channel = bot.get_channel(1042374278424829955) #봇이 단어시험을 진행할 채널 지정
+        words.clear()
+        kor.clear()
+        for i in range(3):
+            words.append(data[value[i]][0])
+            kor.append(data[value[i]][1])
+            kor[i] = kor[i].split(", ")
+        #print(kor)
+        
+        channel = bot.get_channel(1042374278424829955) #봇이 단어시험을 진행할 채널 지정
 
-    await channel.send(f"오늘의 단어입니다.\n{words[0]}, {words[1]}, {words[2]}")
+        await channel.send(f"오늘의 단어입니다.\n{words[0]}, {words[1]}, {words[2]}")
 
 
 #정답 입력하는 명령어 (ex: !정답 답1 답2 답3)

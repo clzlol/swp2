@@ -1,0 +1,16 @@
+nextcord - 파이썬용 디스코드 봇 API Wrapper인 discord.py를 포크하여 만들어진 API이다. nextcord는
+async/await 구문을 사용하기 때문에 함수를 만들 때 async/await을 이용해야한다. 
+nextcord.ext는 nextcord의 요소 중 하나
+
+asyncio - async/await 구문을 사용해 동시성 코드를 작성하는 라이브러리이다.
+
+게이트웨이설정 - 디스코드 봇과 채팅창은 디스코드의 서버에 존재하고, 소스코드는 나의 로컬에 존재하므로
+봇이 채팅을 입력하는 네트워크 통신에 소스코드를 연결하는 게이트웨이 설정을 해주어야 소스코드대로 봇을
+통제할 수 있게 된다.
+
+ctx - context의 약자로, 명령어를 의미한다. @bot.command()의 괄호 안에서 name을 지정해주면
+그것이 명령어가 되고, 주지 않는다면 함수의 이름이 명령어가 된다.
+
+@client.event - 봇의 상태(켜졌는지, 꺼졌는지)를 인식하는 태그
+
+bot.run -> @bot.event / on_ready() -> schedule_daily_message() -> 명령어를 입력받을 때까지 대기
