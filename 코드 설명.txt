@@ -15,3 +15,8 @@ ctx - context의 약자로, 명령어를 의미한다. @bot.command()의 괄호 
 그것이 명령어가 되고, 주지 않는다면 함수의 이름이 명령어가 된다.
 
 bot.run -> @bot.event / on_ready() -> schedule_daily_message() -> 명령어를 입력받을 때까지 대기
+
+
+
+
+비동기 프로그래밍 참고 : https://cosmosproject.tistory.com/474

@@ -122,4 +122,4 @@ async def on_ready():
 
 #봇 실행
 if __name__ == '__main__':
-    bot.run("MTA0NDEwNTQ4NTYyNTg2MDEzNw.GVYEnF.wq_fniuyKiERUOhNkhOV7IztJZfbPrVE_YLxnU")
+    bot.run("봇 토큰 입력")
