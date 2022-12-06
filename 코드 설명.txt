@@ -14,3 +14,6 @@ ctx - context의 약자로, 명령어를 의미한다. @bot.command()의 괄호 
 @client.event - 봇의 상태(켜졌는지, 꺼졌는지)를 인식하는 태그
 
 bot.run -> @bot.event / on_ready() -> schedule_daily_message() -> 명령어를 입력받을 때까지 대기
+
++동기/비동기 프로그래밍
++코틀린, 코루틴
